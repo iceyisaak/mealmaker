@@ -3,10 +3,10 @@ import { API_PREFIX, BASEURL } from "./api-constant";
 import axios from "axios";
 import { type Meal } from "../types/meal";
 
-export const getSurpriseMeal = () => {
+export const getRecommendedMenu = () => {
   const APIURL = `${BASEURL}${API_PREFIX}random.php`;
   return useQuery<Meal, Error>({
-    queryKey: ["surpriseMeal"],
+    queryKey: ["recommendedMenu"],
     queryFn: async () => {
       const response = await axios.get(APIURL);
       return response.data.meals[0] as Meal;
