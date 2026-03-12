@@ -1,7 +1,7 @@
-import { getSurpriseMeal } from "../../apis/recipe-api";
+import { getRecommendedMenu } from "../../apis/recipe-api";
 
 export const Header = () => {
-  const { data, error, isLoading } = getSurpriseMeal();
+  const { data, error, isLoading } = getRecommendedMenu();
   return (
     <header>
       <h3>Recommended Menu:</h3>
