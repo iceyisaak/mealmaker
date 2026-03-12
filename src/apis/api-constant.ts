@@ -1,2 +1,2 @@
 export const BASEURL = "https://www.themealdb.com/";
-export const APIKEY = `api/json/v1/1`;
+export const API_PREFIX = `api/json/v1/1/`;
