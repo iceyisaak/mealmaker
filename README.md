@@ -21,4 +21,8 @@ This app allows users to lookup meals inspirations and recipes
 
 TheMealDB API: https://www.themealdb.com/api.php
 
+# Favicon
+
+SVG Repo: https://www.svgrepo.com/svg/492596/food
+
 ---
