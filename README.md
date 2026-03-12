@@ -4,7 +4,7 @@ Link to Repo: https://github.com/iceyisaak/mealmaker
 
 ## Description
 
-This app allows users to lookup meals inspirations and recipes
+This app allows users to lookup meal inspirations and recipes
 
 ## Technologies
 
