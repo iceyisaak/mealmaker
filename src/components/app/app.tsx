@@ -1,9 +1,13 @@
-import "./App.css";
+import { Navbar } from "../navbar";
+import { Footer } from "../footer";
+import { Header } from "../header";
 
 export const App = () => {
   return (
     <>
-      <h1>MealMaker</h1>
+      <Navbar />
+      <Header />
+      <Footer />
     </>
   );
 };
