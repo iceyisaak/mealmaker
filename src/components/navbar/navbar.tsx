@@ -1,11 +1,10 @@
-import { SearchBar } from "./search-bar";
+import Logo from "../../assets/mealmaker-logo.svg?react";
 
 export const Navbar = () => {
   return (
-    <nav>
-      <img />
-      <span>MealMaker</span>
-      <SearchBar />
+    <nav className="w-full bg-amber-600 flex py-3">
+      <Logo className={`w-8 h-8 text-amber-600 ml-3 mr-1`} />
+      <span className="text-2xl">MealMaker</span>
     </nav>
   );
 };

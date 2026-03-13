@@ -10,7 +10,7 @@ export const Header = () => {
       {data && (
         <>
           <h1>{data?.strMeal}</h1>
-          <img src={data?.strMealThumb} alt={data?.strMeal} width="200" />
+          <img src={data?.strMealThumb} alt={data?.strMeal} width="auto" />
         </>
       )}
     </header>
