@@ -57,3 +57,14 @@ export interface Meal {
 export interface MealsResponse {
   meals: Meal[];
 }
+
+export interface Category {
+  idCategory: string;
+  strCategory: string;
+  strCategoryThumb: string;
+  strCategoryDescription: string;
+}
+
+export interface CategoriesResponse {
+  categories: Category[];
+}

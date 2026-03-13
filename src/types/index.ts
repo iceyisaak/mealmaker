@@ -1,1 +1,1 @@
-export type { Meal } from "./meal";
+export type { Meal, Category } from "./meal";
