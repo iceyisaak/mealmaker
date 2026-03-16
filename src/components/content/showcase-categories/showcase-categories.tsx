@@ -4,7 +4,9 @@ export const ShowcaseCategories = () => {
   const { data, error, isLoading } = useGetMealCategories();
   return (
     <section className="py-50">
-      <h3 className="text-5xl text-center mb-50">Culinary Categories</h3>
+      <h3 className="text-5xl text-center mb-50 font-bold">
+        Culinary Categories
+      </h3>
       <div>
         {error && <h3>Error: {error.message}</h3>}
         {isLoading && <h3>Loading...</h3>}
