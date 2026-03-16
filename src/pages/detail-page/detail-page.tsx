@@ -20,7 +20,7 @@ export const DetailPage = () => {
   }).filter(({ ingredient }) => ingredient && ingredient.trim() !== "");
 
   return (
-    <div className="mx-[24vw] py-32 min-h-screen">
+    <section className="mx-[24vw] py-32 min-h-screen">
       <span
         onClick={() => router.history.back()}
         className="flex items-center gap-1 text-sm text-blue-700 hover:text-blue-900 cursor-pointer"
@@ -63,7 +63,7 @@ export const DetailPage = () => {
             </p>
           ))}
 
-        <hr className="mt-14 mb-20" />
+        <hr className="mt-30 mb-50" />
         {meal.strYoutube && (
           <iframe
             width="100%"
@@ -76,7 +76,7 @@ export const DetailPage = () => {
           />
         )}
       </div>
-    </div>
+    </section>
   );
 };
 
