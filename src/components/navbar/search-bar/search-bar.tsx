@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { SearchRecommendationMenu } from "./search-recommendation-menu";
+import { GoSearch } from "react-icons/go";
 import { type Meal } from "../../../types";
 
 interface SearchBarProps {
@@ -66,7 +67,7 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
         type="submit"
         className="px-6 py-3 bg-amber-600 text-white font-bold text-lg rounded-r-md hover:bg-amber-700 transition-colors"
       >
-        Search
+        <GoSearch />
       </button>
 
       <SearchRecommendationMenu
