@@ -1,9 +1,9 @@
-import { getRecommendedMenu } from "../../apis/recipe-api";
+import { useGetRecommendedMenu } from "../../apis/recipe-api";
 import { SearchBar } from "../navbar/search-bar";
 import { VscRobot } from "react-icons/vsc";
 
 export const Header = () => {
-  const { data, error, isLoading } = getRecommendedMenu();
+  const { data, error, isLoading } = useGetRecommendedMenu();
   return (
     <header>
       <aside className="w-full h-[60rem] bg-blue-200 flex flex-col justify-center items-center">

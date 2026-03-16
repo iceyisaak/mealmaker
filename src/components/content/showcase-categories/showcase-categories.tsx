@@ -1,7 +1,7 @@
-import { getMealCategories } from "../../../apis/recipe-api";
+import { useGetMealCategories } from "../../../apis/recipe-api";
 
 export const ShowcaseCategories = () => {
-  const { data, error, isLoading } = getMealCategories();
+  const { data, error, isLoading } = useGetMealCategories();
   return (
     <section className="py-50">
       <h3 className="text-5xl text-center mb-50">Culinary Categories</h3>
