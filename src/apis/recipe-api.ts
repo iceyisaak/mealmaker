@@ -46,3 +46,19 @@ export const useGetMeals = (page: number, searchTerm: string = "Arrabiata") => {
     staleTime: 5000,
   });
 };
+
+export const useGetMealById = (id: string) => {
+  const APIURL = `${BASEURL}${API_PREFIX}lookup.php?i=${id}`;
+
+  return useQuery({
+    queryKey: ["meal", id],
+
+    queryFn: async () => {
+      const response = await axios.get(APIURL);
+      return response.data.meals[0] as Meal;
+    },
+
+    enabled: !!id,
+    staleTime: 5000,
+  });
+};
