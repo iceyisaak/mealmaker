@@ -30,7 +30,8 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
     setInputFocus(true);
   };
 
-  const inputBlurHandler = () => {
+  const inputBlurHandler = (e?: React.FocusEvent<HTMLInputElement>) => {
+    if (e?.relatedTarget?.closest('[role="listbox"]')) return; // focus moved into menu
     inputRef.current?.blur();
     setInputFocus(false);
     setActiveIndex(-1);
@@ -57,7 +58,7 @@ export const SearchBar = ({ defaultValue = "" }: SearchBarProps) => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onFocus={inputFocusHandler}
-        onBlur={inputBlurHandler}
+        onBlur={(e) => inputBlurHandler(e)}
         placeholder="Search recipes..."
         className="flex-1 px-4 py-3 text-lg border-2 border-gray-300 rounded-l-md focus:outline-none focus:border-amber-500 bg-white"
       />

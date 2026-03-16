@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { useGetMeals } from "../../../../apis/recipe-api";
 import { type Meal } from "../../../../types";
+import { Link } from "@tanstack/react-router";
 
 interface SearchRecommendationMenuProps {
   query: string;
@@ -85,6 +86,7 @@ export const SearchRecommendationMenu = ({
     <div
       className="absolute top-full left-0 right-0 z-50 mt-1.5 font-barlow"
       role="listbox"
+      tabIndex={-1}
       aria-label="Search recommendations"
     >
       <div className="overflow-hidden rounded border border-amber-brand/20 bg-surface-dark/95 shadow-[0_8px_32px_rgba(0,0,0,0.5),0_0_0_1px_rgba(196,124,58,0.08)] backdrop-blur-sm">
@@ -137,68 +139,71 @@ export const SearchRecommendationMenu = ({
             </li>
           ) : (
             suggestions.map((meal, index) => (
-              <li
-                key={meal.idMeal}
-                data-recommendation-item
-                role="option"
-                aria-selected={activeIndex === index}
-                onClick={() => onSelect(meal)}
-                onMouseEnter={() => setActiveIndex(index)}
-                className={`group flex cursor-pointer items-center gap-3 border-l-2 px-4 py-2.5 transition-all duration-100 ${
-                  activeIndex === index
-                    ? "border-amber-brand bg-amber-brand/8"
-                    : "border-transparent hover:border-amber-brand/40 hover:bg-amber-brand/5"
-                }`}
-              >
-                {/* Thumbnail */}
-                <div className="relative size-10 shrink-0 overflow-hidden rounded ring-1 ring-amber-brand/20">
-                  <img
-                    src={`${meal.strMealThumb}/preview`}
-                    alt={meal.strMeal}
-                    className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-110"
-                    loading="lazy"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = meal.strMealThumb;
-                    }}
-                  />
-                </div>
-
-                {/* Text */}
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium leading-tight text-stone-cream">
-                    <HighlightMatch text={meal.strMeal} query={query} />
-                  </p>
-                  <p className="mt-0.5 truncate text-[11px] text-amber-brand/70">
-                    {meal.strCategory}
-                    {meal.strArea && (
-                      <span className="text-stone-muted">
-                        {" "}
-                        · {meal.strArea}
-                      </span>
-                    )}
-                  </p>
-                </div>
-
-                {/* Arrow */}
-                <svg
-                  width="13"
-                  height="13"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                  className={`shrink-0 transition-all duration-150 ${
+              <li key={meal.idMeal}>
+                <Link
+                  to="/meal/$id"
+                  params={{ id: meal.idMeal }}
+                  data-recommendation-item
+                  role="option"
+                  aria-selected={activeIndex === index}
+                  onClick={() => onSelect(meal)}
+                  onMouseEnter={() => setActiveIndex(index)}
+                  className={`group flex cursor-pointer items-center gap-3 border-l-2 px-4 py-2.5 transition-all duration-100 ${
                     activeIndex === index
-                      ? "translate-x-0.5 text-amber-brand"
-                      : "text-stone-muted"
+                      ? "border-amber-brand bg-amber-brand/8"
+                      : "border-transparent hover:border-amber-brand/40 hover:bg-amber-brand/5"
                   }`}
                 >
-                  <path
-                    d="M3 7h8M7 3l4 4-4 4"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                  {/* Thumbnail */}
+                  <div className="relative size-10 shrink-0 overflow-hidden rounded ring-1 ring-amber-brand/20">
+                    <img
+                      src={`${meal.strMealThumb}/preview`}
+                      alt={meal.strMeal}
+                      className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-110"
+                      loading="lazy"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = meal.strMealThumb;
+                      }}
+                    />
+                  </div>
+
+                  {/* Text */}
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-medium leading-tight text-stone-cream">
+                      <HighlightMatch text={meal.strMeal} query={query} />
+                    </p>
+                    <p className="mt-0.5 truncate text-[11px] text-amber-brand/70">
+                      {meal.strCategory}
+                      {meal.strArea && (
+                        <span className="text-stone-muted">
+                          {" "}
+                          · {meal.strArea}
+                        </span>
+                      )}
+                    </p>
+                  </div>
+
+                  {/* Arrow */}
+                  <svg
+                    width="13"
+                    height="13"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    className={`shrink-0 transition-all duration-150 ${
+                      activeIndex === index
+                        ? "translate-x-0.5 text-amber-brand"
+                        : "text-stone-muted"
+                    }`}
+                  >
+                    <path
+                      d="M3 7h8M7 3l4 4-4 4"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Link>
               </li>
             ))
           )}
