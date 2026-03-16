@@ -13,7 +13,12 @@
   --color-stone-faint: #9c876a;
   --color-ink: #1a1208;
 
+  --color-surface-dark: #181a1b;
+  --color-surface-card: #1f2223;
+  --color-surface-hover: #252829;
+
   --animate-shimmer: shimmer 1.4s infinite;
+  --animate-pulse-glow: pulse-glow 3s ease-in-out infinite;
 
   @keyframes shimmer {
     0% {
@@ -21,6 +26,18 @@
     }
     100% {
       background-position: -200% 0;
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.7;
+      transform: scale(1.05);
     }
   }
 }
