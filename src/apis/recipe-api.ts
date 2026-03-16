@@ -1,4 +1,4 @@
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { API_PREFIX, BASEURL } from "./api-constant";
 import axios from "axios";
 import { type Meal, type Category } from "../types/meal";
