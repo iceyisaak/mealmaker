@@ -5,7 +5,7 @@ import SearchSection from "../search-section/search-section";
 export const Header = () => {
   const { data, error, isLoading } = useGetRecommendedMenu();
   return (
-    <header>
+    <header className="bg-[#181A1B]">
       <SearchSection />
       <section className="py-50 px-[5vw]">
         <h3 className="text-5xl mb-14 text-center">Recommended Menu</h3>
