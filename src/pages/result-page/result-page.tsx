@@ -4,7 +4,6 @@ import { useGetMeals } from "../../apis/recipe-api";
 import { Route } from "../../routes/search";
 import { ResultCard } from "./result-card";
 import { SearchBar } from "../../components/navbar/search-bar";
-import { type Meal } from "../../types";
 
 export const ResultPage = () => {
   const { q } = Route.useSearch();
