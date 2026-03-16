@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
     <footer className="h-16 bg-[#181A1B] flex flex-col justify-center">
-      <h3 className="text-center">
+      <h3 className="text-center text-gray-200">
         Project{" "}
         <a
           href="https://github.com/iceyisaak/mealmaker"
