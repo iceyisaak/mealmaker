@@ -19,21 +19,6 @@ const MealCard = ({ meal }: { meal: Meal }) => (
     <div className="p-4 flex flex-col flex-1">
       <h3 className="font-bold text-lg text-gray-800 mb-1">{meal.strMeal}</h3>
       <p className="text-sm text-gray-500 mb-3">{meal.strArea} Cuisine</p>
-      <p className="text-sm text-gray-600 line-clamp-2 flex-1">
-        {meal.strInstructions}
-      </p>
-      {/* {meal.strYoutube ? (
-        <a
-          href={meal.strYoutube}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-4 text-center py-2 bg-amber-50 border border-amber-300 text-amber-700 font-semibold rounded-lg hover:bg-amber-100 transition-colors text-sm"
-        >
-          ▶ Watch on YouTube
-        </a>
-      ) : (
-        <></>
-      )} */}
     </div>
   </div>
 );
