@@ -1,9 +1,13 @@
+import { useRouter } from "@tanstack/react-router";
 import { useGetMealById } from "../../apis/recipe-api";
 import { Route } from "../../routes/meal.$id";
+
+import { IoArrowBackSharp } from "react-icons/io5";
 
 export const DetailPage = () => {
   const { id } = Route.useParams();
   const { data: meal, isLoading, isError, error } = useGetMealById(id);
+  const router = useRouter();
 
   if (isLoading) return <div>Loading recipe...</div>;
   if (isError) return <div>Error: {error.message}</div>;
@@ -17,6 +21,12 @@ export const DetailPage = () => {
 
   return (
     <div className="mx-[24vw] py-32 min-h-screen">
+      <span
+        onClick={() => router.history.back()}
+        className="flex items-center gap-1 text-sm text-blue-700 hover:text-blue-900 cursor-pointer"
+      >
+        <IoArrowBackSharp /> Back
+      </span>
       <h1 className="text-5xl mb-3">{meal.strMeal}</h1>
       <div>
         <p>

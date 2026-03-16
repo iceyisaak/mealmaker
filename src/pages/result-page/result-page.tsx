@@ -1,5 +1,5 @@
 // src/pages/result-page.tsx
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { Route } from "../../routes/search";
 import { useGetMeals } from "../../apis/recipe-api";
 import { type Meal } from "../../types";
@@ -19,10 +19,10 @@ const MealCard = ({ meal }: { meal: Meal }) => (
     <div className="p-4 flex flex-col flex-1">
       <h3 className="font-bold text-lg text-gray-800 mb-1">{meal.strMeal}</h3>
       <p className="text-sm text-gray-500 mb-3">{meal.strArea} Cuisine</p>
-      <p className="text-sm text-gray-600 line-clamp-3 flex-1">
+      <p className="text-sm text-gray-600 line-clamp-2 flex-1">
         {meal.strInstructions}
       </p>
-      {meal.strYoutube && (
+      {/* {meal.strYoutube ? (
         <a
           href={meal.strYoutube}
           target="_blank"
@@ -31,7 +31,9 @@ const MealCard = ({ meal }: { meal: Meal }) => (
         >
           ▶ Watch on YouTube
         </a>
-      )}
+      ) : (
+        <></>
+      )} */}
     </div>
   </div>
 );
@@ -52,7 +54,7 @@ export const ResultPage = () => {
           onClick={() => navigate({ to: "/" })}
           className="text-sm text-blue-700 underline hover:text-blue-900"
         >
-          ← Back to search
+          ← Back
         </button>
       </div>
 
@@ -81,7 +83,9 @@ export const ResultPage = () => {
             <p className="text-gray-500 mb-6">{meals.length} recipe(s) found</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {meals.map((meal) => (
-                <MealCard key={meal.idMeal} meal={meal} />
+                <Link to="/meal/$id" params={{ id: meal.idMeal }}>
+                  <MealCard key={meal.idMeal} meal={meal} />
+                </Link>
               ))}
             </div>
           </>
