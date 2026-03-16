@@ -22,8 +22,8 @@ export const ResultPage = () => {
   return (
     <div className="min-h-screen bg-[#181A1B] font-barlow">
       {/* Hero search band */}
-      <div className="relative overflow-hidden border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
-        <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
+      <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
+        <div className=" overflow-hidden pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
         <div className="relative">
           <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
             Search Results
