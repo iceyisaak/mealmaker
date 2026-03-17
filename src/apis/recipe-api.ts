@@ -25,48 +25,6 @@ export const useGetMealCategories = () => {
   });
 };
 
-// export const useGetMeals = (searchTerm: string) => {
-//   const APIURL = `${BASEURL}${API_PREFIX}search.php?s=${searchTerm}`;
-
-//   return useQuery({
-//     queryKey: ["meals", searchTerm],
-//     queryFn: async () => {
-//       const response = await axios.get(APIURL);
-//       return response.data.meals as Meal[];
-//     },
-//     staleTime: 5000,
-//   });
-// };
-
-// export const useGetMeals = (params: MealSearchParams) => {
-//   let apiUrl: string;
-//   let queryKey: unknown[];
-
-//   switch (params.type) {
-//     case "search":
-//       apiUrl = `${BASEURL}${API_PREFIX}search.php?s=${params.q}`;
-//       queryKey = ["meals", "search", params.q];
-//       break;
-//     case "area":
-//       apiUrl = `${BASEURL}${API_PREFIX}filter.php?a=${params.a}`;
-//       queryKey = ["meals", "area", params.a];
-//       break;
-//     case "category":
-//       apiUrl = `${BASEURL}${API_PREFIX}filter.php?c=${params.c}`;
-//       queryKey = ["meals", "category", params.c];
-//       break;
-//   }
-
-//   return useQuery({
-//     queryKey,
-//     queryFn: async () => {
-//       const response = await axios.get(apiUrl);
-//       return response.data.meals as Meal[];
-//     },
-//     staleTime: 5000,
-//   });
-// };
-
 const resolveParams = (params: MealSearchParams) => {
   switch (params.type) {
     case "search":
@@ -140,3 +98,14 @@ export const useGetMealOrigin = () => {
     },
   });
 };
+
+// export const useGetMealOrigins = () => {
+//   const APIURL = `${BASEURL}${API_PREFIX}list.php?a=list`;
+//   return useQuery<Meal[], Error>({
+//     queryKey: ["mealOrigins"],
+//     queryFn: async () => {
+//       const response = await axios.get(APIURL);
+//       return response.data.meals;
+//     },
+//   });
+// };
