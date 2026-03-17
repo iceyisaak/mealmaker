@@ -53,3 +53,14 @@ export const useGetMealById = (id: string) => {
     staleTime: 5000,
   });
 };
+
+export const useGetMealOrigin = () => {
+  const APIURL = `${BASEURL}${API_PREFIX}list.php?a=list`;
+  return useQuery<Meal[], Error>({
+    queryKey: ["mealOrigin"],
+    queryFn: async () => {
+      const response = await axios.get(APIURL);
+      return response.data.meals;
+    },
+  });
+};
