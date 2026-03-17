@@ -111,8 +111,6 @@ export const ResultPage = () => {
 
   const { data: meals, isLoading, isError } = useGetMeals(params);
 
-  const activeLabel = a ? `Origin: ${a}` : c ? `Category: ${c}` : null;
-
   const categoryOptions =
     categories?.map((cat) => ({
       value: cat.strCategory,

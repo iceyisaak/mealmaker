@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_PREFIX, BASEURL } from "./api-constant";
 import axios from "axios";
-import { type Meal, type Category } from "../types/meal";
+import { type Meal, type Category, type MealSearchParams } from "../types/meal";
 
 export const useGetRecommendedMenu = () => {
   const APIURL = `${BASEURL}${API_PREFIX}random.php`;
@@ -38,35 +38,69 @@ export const useGetMealCategories = () => {
 //   });
 // };
 
-type MealSearchParams =
-  | { type: "search"; q: string }
-  | { type: "area"; a: string }
-  | { type: "category"; c: string };
+// export const useGetMeals = (params: MealSearchParams) => {
+//   let apiUrl: string;
+//   let queryKey: unknown[];
 
-export const useGetMeals = (params: MealSearchParams) => {
-  let apiUrl: string;
-  let queryKey: unknown[];
+//   switch (params.type) {
+//     case "search":
+//       apiUrl = `${BASEURL}${API_PREFIX}search.php?s=${params.q}`;
+//       queryKey = ["meals", "search", params.q];
+//       break;
+//     case "area":
+//       apiUrl = `${BASEURL}${API_PREFIX}filter.php?a=${params.a}`;
+//       queryKey = ["meals", "area", params.a];
+//       break;
+//     case "category":
+//       apiUrl = `${BASEURL}${API_PREFIX}filter.php?c=${params.c}`;
+//       queryKey = ["meals", "category", params.c];
+//       break;
+//   }
 
+//   return useQuery({
+//     queryKey,
+//     queryFn: async () => {
+//       const response = await axios.get(apiUrl);
+//       return response.data.meals as Meal[];
+//     },
+//     staleTime: 5000,
+//   });
+// };
+
+const resolveParams = (params: MealSearchParams) => {
   switch (params.type) {
     case "search":
-      apiUrl = `${BASEURL}${API_PREFIX}search.php?s=${params.q}`;
-      queryKey = ["meals", "search", params.q];
-      break;
+      return {
+        url: `${BASEURL}${API_PREFIX}search.php?s=${params.q}`,
+        queryKey: ["meals", "search", params.q],
+        transform: (meals: Meal[]) => meals,
+      };
     case "area":
-      apiUrl = `${BASEURL}${API_PREFIX}filter.php?a=${params.a}`;
-      queryKey = ["meals", "area", params.a];
-      break;
+      return {
+        url: `${BASEURL}${API_PREFIX}filter.php?a=${params.a}`,
+        queryKey: ["meals", "area", params.a],
+        transform: (meals: Meal[]) =>
+          meals.map((meal) => ({ ...meal, strArea: params.a })),
+      };
     case "category":
-      apiUrl = `${BASEURL}${API_PREFIX}filter.php?c=${params.c}`;
-      queryKey = ["meals", "category", params.c];
-      break;
+      return {
+        url: `${BASEURL}${API_PREFIX}filter.php?c=${params.c}`,
+        queryKey: ["meals", "category", params.c],
+        transform: (meals: Meal[]) =>
+          meals.map((meal) => ({ ...meal, strCategory: params.c })),
+      };
   }
+};
+
+export const useGetMeals = (params: MealSearchParams) => {
+  const { url, queryKey, transform } = resolveParams(params);
 
   return useQuery({
     queryKey,
     queryFn: async () => {
-      const response = await axios.get(apiUrl);
-      return response.data.meals as Meal[];
+      const response = await axios.get(url);
+      const meals = response.data.meals as Meal[];
+      return meals ? transform(meals) : [];
     },
     staleTime: 5000,
   });
