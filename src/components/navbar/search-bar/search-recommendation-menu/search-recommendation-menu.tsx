@@ -59,7 +59,11 @@ export const SearchRecommendationMenu = ({
   activeIndex,
   setActiveIndex,
 }: SearchRecommendationMenuProps) => {
-  const { data: meals, isLoading, isFetching } = useGetMeals(query);
+  const {
+    data: meals,
+    isLoading,
+    isFetching,
+  } = useGetMeals({ type: "search", q: query });
   const menuRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
 
@@ -214,7 +218,7 @@ export const SearchRecommendationMenu = ({
           <div className="border-t border-amber-brand/10 bg-amber-brand/5 px-4 py-2.5">
             <button
               onClick={() => {
-                navigate({ to: "/search", search: { q: query } });
+                navigate({ to: "/search", search: { q: query, a: "", c: "" } });
                 onClose();
               }}
               className="flex w-full items-center justify-center gap-2 text-[11px] font-medium uppercase tracking-[0.18em] text-stone-faint transition-colors hover:text-amber-brand py-0.5"

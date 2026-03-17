@@ -1,1 +1,1 @@
-export type { Meal, Category } from "./meal";
+export type { Meal, Category, MealSearchParams } from "./meal";

@@ -4,6 +4,8 @@ import { useGetMeals } from "../../apis/recipe-api";
 import { Route } from "../../routes/search";
 import { ResultCard } from "./result-card";
 import { SearchBar } from "../../components/navbar/search-bar";
+import { useSearch } from "@tanstack/react-router";
+import type { MealSearchParams } from "../../types";
 
 const SkeletonCard = () => (
   <div className="overflow-hidden rounded bg-surface-card ring-1 ring-amber-brand/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
@@ -15,9 +17,19 @@ const SkeletonCard = () => (
   </div>
 );
 
+// export const ResultPage = () => {
+//   const { q } = Route.useSearch();
+//   const { data: meals, isLoading, isError } = useGetMeals(q);
 export const ResultPage = () => {
-  const { q } = Route.useSearch();
-  const { data: meals, isLoading, isError } = useGetMeals(q);
+  const { q = "", a = "", c = "" } = useSearch({ from: "/search" });
+
+  const params: MealSearchParams = a
+    ? { type: "area", a }
+    : c
+      ? { type: "category", c }
+      : { type: "search", q };
+
+  const { data: meals, isLoading, isError } = useGetMeals(params);
 
   return (
     <div className="min-h-screen bg-[#181A1B] font-barlow">

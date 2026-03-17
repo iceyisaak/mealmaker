@@ -68,3 +68,8 @@ export interface Category {
 export interface CategoriesResponse {
   categories: Category[];
 }
+
+export type MealSearchParams =
+  | { type: "search"; q: string }
+  | { type: "area"; a: string }
+  | { type: "category"; c: string };
