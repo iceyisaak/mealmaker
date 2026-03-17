@@ -1,7 +1,6 @@
 // src/pages/result-page.tsx
 import { Link } from "@tanstack/react-router";
 import { useGetMeals } from "../../apis/recipe-api";
-import { Route } from "../../routes/search";
 import { ResultCard } from "./result-card";
 import { SearchBar } from "../../components/navbar/search-bar";
 import { useSearch } from "@tanstack/react-router";
@@ -17,9 +16,6 @@ const SkeletonCard = () => (
   </div>
 );
 
-// export const ResultPage = () => {
-//   const { q } = Route.useSearch();
-//   const { data: meals, isLoading, isError } = useGetMeals(q);
 export const ResultPage = () => {
   const { q = "", a = "", c = "" } = useSearch({ from: "/search" });
 
