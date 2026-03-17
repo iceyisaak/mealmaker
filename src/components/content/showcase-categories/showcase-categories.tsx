@@ -1,16 +1,20 @@
 import { useGetMealCategories } from "../../../apis/recipe-api";
 
-const SHIMMER =
-  "[background:linear-gradient(90deg,var(--color-stone-warm)_25%,#e8e0d0_50%,var(--color-stone-warm)_75%)] [background-size:200%_100%] animate-shimmer";
-
-const SkeletonCard = () => (
-  <div className="overflow-hidden rounded bg-white shadow-[0_2px_12px_rgba(30,15,0,0.07)]">
-    <div className={`aspect-square ${SHIMMER}`} />
-    <div className="p-5">
-      <div className={`mb-3.5 h-[22px] w-3/5 rounded-sm ${SHIMMER}`} />
-      <div className={`mb-2.5 h-3.5 w-full rounded-sm ${SHIMMER}`} />
-      <div className={`mb-2.5 h-3.5 w-[88%] rounded-sm ${SHIMMER}`} />
-      <div className={`h-3.5 w-[72%] rounded-sm ${SHIMMER}`} />
+const SkeletonRow = ({ reverse }: { reverse: boolean }) => (
+  <div
+    className={`grid grid-cols-2 items-start gap-12 border-t border-stone-200/60 py-10 ${reverse ? "[direction:rtl] [&>*]:[direction:ltr]" : ""}`}
+  >
+    + <div className="aspect-square w-full rounded-lg shimmer" />
+    <div className="flex flex-col justify-center gap-3 py-2">
+      <div className={`h-3 w-10 rounded-sm shimmer`} />
+      <div className={`h-7 w-2/5 rounded-sm shimmer`} />
+      <div className="flex flex-col gap-2 pt-1">
+        <div className={`h-3.5 w-full rounded-sm shimmer`} />
+        <div className={`h-3.5 w-[95%] rounded-sm shimmer`} />
+        <div className={`h-3.5 w-[88%] rounded-sm shimmer`} />
+        <div className={`h-3.5 w-[80%] rounded-sm shimmer`} />
+        <div className={`h-3.5 w-[70%] rounded-sm shimmer`} />
+      </div>
     </div>
   </div>
 );
@@ -34,7 +38,7 @@ export const ShowcaseCategories = () => {
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
 
       {/* Header */}
-      <div className="relative mb-18 text-center">
+      <div className="relative mb-16 text-center">
         <span className="mb-4 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
           Explore by Ingredient
         </span>
@@ -53,49 +57,52 @@ export const ShowcaseCategories = () => {
         </p>
       )}
 
-      {/* Loading skeletons */}
-      {isLoading && (
-        <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <SkeletonCard key={i} />
+      <div className="relative mx-auto max-w-[1100px]">
+        {/* Loading skeletons */}
+        {isLoading &&
+          Array.from({ length: 5 }).map((_, i) => (
+            <SkeletonRow key={i} reverse={i % 2 === 1} />
           ))}
-        </div>
-      )}
 
-      {/* Category grid */}
-      {!isLoading && !error && data && (
-        <div className="mx-auto grid max-w-[1280px] grid-cols-[repeat(auto-fill,minmax(260px,1fr))] gap-6">
-          {sorted.map((category) => (
-            <article
-              key={category.idCategory}
-              className="group flex cursor-pointer flex-col overflow-hidden rounded bg-white shadow-[0_2px_12px_rgba(30,15,0,0.07)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(30,15,0,0.14)]"
-            >
-              {/* Image */}
-              <div className="relative aspect-square overflow-hidden bg-stone-warm">
-                <img
-                  src={category.strCategoryThumb}
-                  alt={category.strCategory}
-                  className="h-full w-full object-contain p-7 transition-transform duration-500 group-hover:scale-[1.06]"
-                />
-                <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 [background:linear-gradient(180deg,transparent_40%,rgba(196,124,58,0.15)_100%)]" />
-              </div>
+        {/* Category rows */}
+        {!isLoading &&
+          !error &&
+          data &&
+          sorted.map((category, index) => {
+            const isReverse = index % 2 === 1;
+            return (
+              <article
+                key={category.idCategory}
+                className={`group grid cursor-pointer grid-cols-2 items-start gap-12 border-t border-stone-200/60 py-10 transition-colors duration-200 ${isReverse ? "[direction:rtl] [&>*]:[direction:ltr]" : ""}`}
+              >
+                {/* Image — full 700px natural size, contained in its column */}
+                <div className="overflow-hidden rounded-lg bg-stone-warm">
+                  <img
+                    src={category.strCategoryThumb}
+                    alt={category.strCategory}
+                    className="h-full w-full object-contain p-8 transition-transform duration-500 group-hover:scale-[1.04]"
+                  />
+                </div>
 
-              {/* Body */}
-              <div className="flex flex-1 flex-col px-5 pb-6 pt-5">
-                <h3 className="mb-2.5 font-playfair text-[22px] font-bold leading-tight tracking-tight text-ink">
-                  {category.strCategory}
-                </h3>
-                <p className="line-clamp-4 flex-1 text-[13.5px] font-light leading-[1.65] text-stone-muted">
-                  {category.strCategoryDescription}
-                </p>
-                <span className="mt-3.5 text-[10px] font-medium uppercase tracking-[0.18em] text-amber-brand">
-                  Explore recipes →
-                </span>
-              </div>
-            </article>
-          ))}
-        </div>
-      )}
+                {/* Text */}
+                <div className="flex flex-col justify-center py-2">
+                  <span className="mb-2 text-[11px] font-medium tracking-[0.15em] text-amber-brand opacity-70">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mb-4 font-playfair text-[28px] font-bold leading-tight tracking-tight text-ink">
+                    {category.strCategory}
+                  </h3>
+                  <p className="text-[14px] font-light leading-[1.75] text-stone-muted">
+                    {category.strCategoryDescription}
+                  </p>
+                  <span className="mt-5 text-[10px] font-medium uppercase tracking-[0.18em] text-amber-brand opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                    Explore recipes →
+                  </span>
+                </div>
+              </article>
+            );
+          })}
+      </div>
     </section>
   );
 };

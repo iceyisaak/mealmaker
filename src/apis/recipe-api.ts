@@ -80,14 +80,22 @@ const resolveParams = (params: MealSearchParams) => {
         url: `${BASEURL}${API_PREFIX}filter.php?a=${params.a}`,
         queryKey: ["meals", "area", params.a],
         transform: (meals: Meal[]) =>
-          meals.map((meal) => ({ ...meal, strArea: params.a })),
+          meals.map((meal) => ({
+            ...meal,
+            strArea: params.a,
+            strCategory: "",
+          })),
       };
     case "category":
       return {
         url: `${BASEURL}${API_PREFIX}filter.php?c=${params.c}`,
         queryKey: ["meals", "category", params.c],
         transform: (meals: Meal[]) =>
-          meals.map((meal) => ({ ...meal, strCategory: params.c })),
+          meals.map((meal) => ({
+            ...meal,
+            strCategory: params.c,
+            strArea: "",
+          })),
       };
   }
 };
