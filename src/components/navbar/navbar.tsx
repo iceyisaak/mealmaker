@@ -26,19 +26,19 @@ export const Navbar = () => {
 
   const exploreLinks = [
     {
-      to: "/search",
+      to: "/category",
       search: { mode: "categories" },
       icon: UtensilsCrossed,
       label: "By Culinary Category",
     },
     {
-      to: "/search",
+      to: "/origin",
       search: { mode: "origin" },
       icon: Globe,
       label: "By Culinary Origin",
     },
     {
-      to: "/search",
+      to: "/ingredient",
       search: { mode: "ingredients" },
       icon: Leaf,
       label: "By Ingredients",
