@@ -27,7 +27,7 @@ export const DiscoverRecipes = () => {
   ];
 
   return (
-    <section className="bg-stone-cream py-32 px-12 font-barlow relative overflow-hidden">
+    <section className="h-[80rem] bg-stone-cream py-62 px-12 font-barlow relative overflow-hidden">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
 
@@ -37,7 +37,7 @@ export const DiscoverRecipes = () => {
           Find What You're Craving
         </span>
         <h2 className="mb-5 font-playfair text-[clamp(36px,5vw,64px)] font-black leading-[1.05] tracking-tight text-ink">
-          Explore <em className="italic text-amber-brand">Recipes</em>
+          Discover <em className="italic text-amber-brand">Recipes</em>
         </h2>
         <hr className="mx-auto h-0.5 w-15 border-none [background:linear-gradient(90deg,var(--color-amber-brand),var(--color-amber-light))]" />
       </div>
