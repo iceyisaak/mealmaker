@@ -4,7 +4,7 @@ import { useGetRecommendedMenu } from "../../apis/recipe-api";
 export const RecommendedMenu = () => {
   const { data, error, isLoading } = useGetRecommendedMenu();
   return (
-    <section className="relative overflow-hidden px-[5vw] py-24 bg-[#181A1B]">
+    <section className="h-[65rem] relative overflow-hidden px-[5vw] py-20 bg-[#181A1B]">
       {/* Ambient glow behind the meal image */}
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_50%_60%,rgba(196,124,58,0.08)_0%,transparent_65%)]" />
 
