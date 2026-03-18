@@ -98,14 +98,3 @@ export const useGetMealOrigin = () => {
     },
   });
 };
-
-// export const useGetMealOrigins = () => {
-//   const APIURL = `${BASEURL}${API_PREFIX}list.php?a=list`;
-//   return useQuery<Meal[], Error>({
-//     queryKey: ["mealOrigins"],
-//     queryFn: async () => {
-//       const response = await axios.get(APIURL);
-//       return response.data.meals;
-//     },
-//   });
-// };
