@@ -40,17 +40,17 @@
       transform: scale(1.05);
     }
   }
+}
 
-  @layer utilities {
-    .shimmer {
-      background: linear-gradient(
-        90deg,
-        var(--color-stone-warm) 25%,
-        var(--color-stone-faint) 50%,
-        var(--color-stone-warm) 75%
-      );
-      background-size: 200% 100%;
-      animation: var(--animate-shimmer);
-    }
+@layer utilities {
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      var(--color-stone-warm) 25%,
+      var(--color-stone-faint) 50%,
+      var(--color-stone-warm) 75%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
   }
 }
