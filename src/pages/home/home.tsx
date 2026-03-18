@@ -1,3 +1,4 @@
+import { ChefbotSection } from "../../components/chefbot-section";
 import { DiscoverRecipes } from "../../components/discover-recipes";
 import { Header } from "../../components/header";
 import { RecommendedMenu } from "../../components/recommended-menu";
@@ -8,6 +9,7 @@ export const Home = () => {
       <Header />
       <RecommendedMenu />
       <DiscoverRecipes />
+      <ChefbotSection />
     </>
   );
 };
