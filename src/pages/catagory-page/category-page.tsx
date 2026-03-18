@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { useGetMealCategories } from "../../apis/recipe-api";
 
 const SkeletonRow = ({ reverse }: { reverse: boolean }) => (
@@ -71,7 +72,9 @@ export const CategoryPage = () => {
           sorted.map((category, index) => {
             const isReverse = index % 2 === 1;
             return (
-              <article
+              <Link
+                to={`/category/$categoryName`}
+                params={{ categoryName: category.strCategory }}
                 key={category.idCategory}
                 className={`group grid cursor-pointer grid-cols-2 items-start gap-12 border-t border-stone-200/60 py-10 transition-colors duration-200 ${isReverse ? "[direction:rtl] [&>*]:[direction:ltr]" : ""}`}
               >
@@ -99,7 +102,7 @@ export const CategoryPage = () => {
                     Explore recipes →
                   </span>
                 </div>
-              </article>
+              </Link>
             );
           })}
       </div>
