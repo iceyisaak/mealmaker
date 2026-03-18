@@ -1,3 +1,3 @@
-export const ShowcaseIngredients = () => {
-  return <div>showcase-ingredients</div>;
+export const DiscoverRecipes = () => {
+  return <div>DiscoverRecipes</div>;
 };

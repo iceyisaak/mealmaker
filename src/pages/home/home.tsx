@@ -1,11 +1,11 @@
 import { Header } from "../../components/header";
-import { Content } from "../../components/content";
+import { RecommendedMenu } from "../../components/recommended-menu";
 
 export const Home = () => {
   return (
     <>
       <Header />
-      <Content />
+      <RecommendedMenu />
     </>
   );
 };

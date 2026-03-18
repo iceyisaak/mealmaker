@@ -1,4 +1,4 @@
-import { useGetMealCategories } from "../../../apis/recipe-api";
+import { useGetMealCategories } from "../../apis/recipe-api";
 
 const SkeletonRow = ({ reverse }: { reverse: boolean }) => (
   <div
@@ -19,7 +19,7 @@ const SkeletonRow = ({ reverse }: { reverse: boolean }) => (
   </div>
 );
 
-export const ShowcaseCategories = () => {
+export const CategoryPage = () => {
   const { data, error, isLoading } = useGetMealCategories();
 
   const sorted = data
