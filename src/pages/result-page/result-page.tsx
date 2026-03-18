@@ -1,9 +1,7 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useSearch } from "@tanstack/react-router";
 import { useGetMeals } from "../../apis/recipe-api";
 import { ResultCard } from "./result-card";
 import { SearchBar } from "../../components/navbar/search-bar";
-import { useSearch } from "@tanstack/react-router";
-import type { MealSearchParams } from "../../types";
 
 const SkeletonCard = () => (
   <div className="overflow-hidden rounded bg-surface-card ring-1 ring-amber-brand/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
@@ -16,25 +14,10 @@ const SkeletonCard = () => (
 );
 
 export const ResultPage = () => {
-  const {
-    q = "",
-    a = "",
-    c = "",
-    lastFilter = "",
-  } = useSearch({ from: "/search" });
+  const { q } = useSearch({ from: "/search" });
+  const query = q ?? "";
 
-  const params: MealSearchParams =
-    lastFilter === "a" && a
-      ? { type: "area", a }
-      : lastFilter === "c" && c
-        ? { type: "category", c }
-        : a
-          ? { type: "area", a }
-          : c
-            ? { type: "category", c }
-            : { type: "search", q };
-
-  const { data: meals, isLoading, isError } = useGetMeals(params);
+  const { data: meals, isLoading, isError } = useGetMeals(query);
 
   return (
     <div className="min-h-screen bg-[#181A1B] font-barlow">
@@ -46,10 +29,10 @@ export const ResultPage = () => {
             Search Results
           </span>
           <h1 className="mb-8 font-playfair text-[clamp(28px,4vw,52px)] font-black leading-tight tracking-tight text-ink">
-            Results for <em className="italic text-amber-brand">"{q}"</em>
+            Results for <em className="italic text-amber-brand">"{query}"</em>
           </h1>
           <div className="flex justify-center">
-            <SearchBar defaultValue={q} />
+            <SearchBar defaultValue={query} />
           </div>
         </div>
       </div>
@@ -75,7 +58,7 @@ export const ResultPage = () => {
             <div className="mb-4 text-5xl">🍽️</div>
             <p className="font-playfair text-xl italic text-stone-faint">
               No recipes found for{" "}
-              <em className="text-amber-brand">"{q || a || c}"</em>
+              <em className="text-amber-brand">"{query}"</em>
             </p>
             <p className="mt-2 text-[12px] font-light uppercase tracking-[0.2em] text-stone-muted">
               Try a different ingredient or dish name
