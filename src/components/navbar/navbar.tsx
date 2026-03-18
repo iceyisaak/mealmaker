@@ -75,7 +75,7 @@ export const Navbar = () => {
 
             {isOpen && (
               <div className="absolute right-0 top-full mt-2 w-56 bg-[#1e2022] border border-white/10 rounded-xl shadow-2xl shadow-black/50 overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-150 py-1.5">
-                {exploreLinks.map(({ to, search, icon: Icon, label }) => (
+                {exploreLinks.map(({ to, icon: Icon, label }) => (
                   <Link
                     key={label}
                     to={to}
