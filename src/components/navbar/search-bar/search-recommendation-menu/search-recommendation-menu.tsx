@@ -59,11 +59,7 @@ export const SearchRecommendationMenu = ({
   activeIndex,
   setActiveIndex,
 }: SearchRecommendationMenuProps) => {
-  const {
-    data: meals,
-    isLoading,
-    isFetching,
-  } = useGetMeals({ type: "search", q: query });
+  const { data: meals, isLoading, isFetching } = useGetMeals(query);
   const menuRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
 
