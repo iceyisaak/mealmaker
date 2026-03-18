@@ -27,7 +27,7 @@ export const DiscoverRecipes = () => {
   ];
 
   return (
-    <section className="h-[80rem] bg-stone-cream py-62 px-12 font-barlow relative overflow-hidden">
+    <section className="h-[70rem] bg-stone-cream py-62 px-12 font-barlow relative overflow-hidden">
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
 
