@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 export const DiscoverRecipes = () => {
   const cards = [
     {
@@ -7,6 +9,7 @@ export const DiscoverRecipes = () => {
         "Browse meals grouped by type — pasta, seafood, desserts and more.",
       image:
         "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+      to: "/category",
     },
     {
       label: "By Culinary Origin",
@@ -15,6 +18,7 @@ export const DiscoverRecipes = () => {
         "Explore cuisines from around the world, from Italian to Japanese.",
       image:
         "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
+      to: "/origin",
     },
     {
       label: "By Ingredients",
@@ -23,6 +27,7 @@ export const DiscoverRecipes = () => {
         "Start with what's in your kitchen and find recipes that match.",
       image:
         "https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&q=80",
+      to: "/ingredient",
     },
   ];
 
@@ -44,9 +49,10 @@ export const DiscoverRecipes = () => {
 
       {/* Cards */}
       <div className="relative mx-auto flex max-w-5xl flex-col gap-6 sm:flex-row">
-        {cards.map(({ label, icon, description, image }) => (
-          <button
+        {cards.map(({ label, icon, description, image, to }) => (
+          <Link
             key={label}
+            to={to}
             className="group relative flex flex-1 cursor-pointer flex-col items-center justify-end overflow-hidden rounded shadow-[0_2px_12px_rgba(30,15,0,0.15)] transition-[transform,box-shadow] duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_40px_rgba(30,15,0,0.25)] min-h-[280px]"
           >
             {/* Background image */}
@@ -75,7 +81,7 @@ export const DiscoverRecipes = () => {
                 Browse →
               </span>
             </div>
-          </button>
+          </Link>
         ))}
       </div>
     </section>
