@@ -38,7 +38,7 @@ const CategoryIcon = ({ category }: { category: string }) => {
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
-export const CategorySubPage = () => {
+export const CategoryBrowsePage = () => {
   // Expects a route like /category/$category
   const { categoryName } = useParams({ from: "/category/$categoryName" });
 
@@ -154,4 +154,4 @@ export const CategorySubPage = () => {
   );
 };
 
-export default CategorySubPage;
+export default CategoryBrowsePage;
