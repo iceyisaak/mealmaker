@@ -4,42 +4,115 @@ import { ResultCard } from "../result-page/result-card";
 
 // ─── Skeleton ────────────────────────────────────────────────────────────────
 
-const SkeletonCard = () => (
-  <div className="overflow-hidden rounded bg-surface-card ring-1 ring-amber-brand/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
-    <div className="aspect-square [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
-    <div className="px-5 pb-5 pt-4">
-      <div className="mb-2 h-5 w-4/5 rounded-sm [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
-      <div className="h-4 w-2/5 rounded-sm [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
+const SkeletonCard = ({ tall }: { tall?: boolean }) => (
+  <div
+    className={`overflow-hidden rounded-lg bg-surface-card ring-1 ring-amber-brand/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)] ${
+      tall ? "row-span-2" : ""
+    }`}
+  >
+    <div
+      className={`w-full ${tall ? "aspect-[3/4]" : "aspect-square"} [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer`}
+    />
+    <div className="px-4 pb-4 pt-3">
+      <div className="mb-2 h-4 w-3/4 rounded-sm [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
+      <div className="h-3 w-1/3 rounded-sm [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
     </div>
   </div>
 );
 
-// ─── Decorative category badge ────────────────────────────────────────────────
+// ─── Category meta ────────────────────────────────────────────────────────────
 
-const CategoryIcon = ({ category }: { category: string }) => {
-  const icons: Record<string, string> = {
-    Side: "🍞",
-    Beef: "🥩",
-    Chicken: "🍗",
-    Dessert: "🍰",
-    Lamb: "🫕",
-    Pasta: "🍝",
-    Pork: "🥓",
-    Seafood: "🦞",
-    Starter: "🥗",
-    Vegan: "🥦",
-    Vegetarian: "🫑",
-    Breakfast: "🍳",
-    Goat: "🐐",
-    Miscellaneous: "🍴",
-  };
-  return <span>{icons[category] ?? "🍽️"}</span>;
+const CATEGORY_META: Record<
+  string,
+  { icon: string; tagline: string; color: string }
+> = {
+  Side: {
+    icon: "🍞",
+    tagline: "The perfect accompaniment",
+    color: "from-amber-900/40 to-stone-900/0",
+  },
+  Beef: {
+    icon: "🥩",
+    tagline: "Bold, hearty, satisfying",
+    color: "from-red-900/40 to-stone-900/0",
+  },
+  Chicken: {
+    icon: "🍗",
+    tagline: "Versatile and beloved",
+    color: "from-yellow-900/40 to-stone-900/0",
+  },
+  Dessert: {
+    icon: "🍰",
+    tagline: "Sweet endings",
+    color: "from-pink-900/40 to-stone-900/0",
+  },
+  Lamb: {
+    icon: "🫕",
+    tagline: "Rich and aromatic",
+    color: "from-orange-900/40 to-stone-900/0",
+  },
+  Pasta: {
+    icon: "🍝",
+    tagline: "Comfort in every strand",
+    color: "from-amber-900/40 to-stone-900/0",
+  },
+  Pork: {
+    icon: "🥓",
+    tagline: "Smoky, rich, irresistible",
+    color: "from-rose-900/40 to-stone-900/0",
+  },
+  Seafood: {
+    icon: "🦞",
+    tagline: "Fresh from the ocean",
+    color: "from-cyan-900/40 to-stone-900/0",
+  },
+  Starter: {
+    icon: "🥗",
+    tagline: "Begin the experience",
+    color: "from-green-900/40 to-stone-900/0",
+  },
+  Vegan: {
+    icon: "🥦",
+    tagline: "Plant-powered goodness",
+    color: "from-emerald-900/40 to-stone-900/0",
+  },
+  Vegetarian: {
+    icon: "🫑",
+    tagline: "Nature on the plate",
+    color: "from-lime-900/40 to-stone-900/0",
+  },
+  Breakfast: {
+    icon: "🍳",
+    tagline: "Start the day right",
+    color: "from-yellow-900/40 to-stone-900/0",
+  },
+  Miscellaneous: {
+    icon: "🍴",
+    tagline: "Something for everyone",
+    color: "from-stone-900/40 to-stone-900/0",
+  },
 };
+
+const getFallbackMeta = (category: string) => ({
+  icon: "🍽️",
+  tagline: `Explore ${category} recipes`,
+  color: "from-stone-900/40 to-stone-900/0",
+});
+
+// ─── Stat pill ────────────────────────────────────────────────────────────────
+
+const StatPill = ({ count }: { count: number }) => (
+  <div className="inline-flex items-center gap-2 rounded-full border border-amber-brand/20 bg-[#181A1B]/80 px-4 py-1.5 backdrop-blur-sm">
+    <span className="h-1.5 w-1.5 rounded-full bg-amber-brand" />
+    <span className="font-barlow text-[11px] font-semibold uppercase tracking-[0.25em] text-amber-brand">
+      {count} recipe{count !== 1 ? "s" : ""}
+    </span>
+  </div>
+);
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export const CategoryBrowsePage = () => {
-  // Expects a route like /category/$category
   const { categoryName } = useParams({ from: "/category/$categoryName" });
 
   const {
@@ -48,59 +121,82 @@ export const CategoryBrowsePage = () => {
     isError,
   } = useGetMealsByCategory(categoryName);
 
+  const meta = CATEGORY_META[categoryName] ?? getFallbackMeta(categoryName);
+
   return (
     <div className="min-h-screen bg-[#181A1B] font-barlow">
-      {/* ── Hero band ── */}
-      <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
-        {/* Ambient glow layer */}
-        <div className="pointer-events-none absolute inset-0 overflow-hidden [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
+      {/* ── Cinematic hero ──────────────────────────────────────────────── */}
+      <div className="relative overflow-hidden">
+        {/* Dark base + gradient overlay */}
+        <div className="absolute inset-0 bg-[#0e0f10]" />
+        <div
+          className={`absolute inset-0 bg-gradient-to-b ${meta.color} via-transparent`}
+        />
 
-        {/* Decorative horizontal rule */}
-        <div className="relative mx-auto max-w-xs">
-          <div className="mb-6 flex items-center gap-3">
-            <hr className="h-px flex-1 border-none bg-amber-brand/20" />
-            <span className="text-[10px] font-medium uppercase tracking-[0.35em] text-amber-brand/60">
-              Browse Category
-            </span>
-            <hr className="h-px flex-1 border-none bg-amber-brand/20" />
-          </div>
+        {/* Subtle grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(210,160,80,1) 1px, transparent 1px), linear-gradient(90deg, rgba(210,160,80,1) 1px, transparent 1px)",
+            backgroundSize: "48px 48px",
+          }}
+        />
+
+        {/* Large ghost letter behind title */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 select-none font-playfair text-[20vw] font-black leading-none text-white/[0.02] whitespace-nowrap"
+        >
+          {categoryName}
         </div>
 
-        <div className="relative">
-          {/* Large emoji icon */}
-          <div className="mb-4 text-5xl leading-none">
-            <CategoryIcon category={categoryName} />
+        {/* Hero content */}
+        <div className="relative mx-auto max-w-5xl px-6 pb-16 pt-20 text-center">
+          {/* Eyebrow */}
+          <div className="mb-5 flex items-center justify-center gap-3">
+            <div className="h-px w-12 bg-amber-brand/30" />
+            <span className="text-[10px] font-semibold uppercase tracking-[0.4em] text-amber-brand/70">
+              Category
+            </span>
+            <div className="h-px w-12 bg-amber-brand/30" />
           </div>
 
-          <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
-            Category
-          </span>
+          {/* Icon */}
+          <div className="mb-5 text-6xl leading-none">{meta.icon}</div>
 
-          <h1 className="mb-2 font-playfair text-[clamp(32px,5vw,60px)] font-black leading-tight tracking-tight text-ink">
+          {/* Title */}
+          <h1 className="mb-3 font-playfair text-[clamp(40px,6vw,80px)] font-black leading-[0.95] tracking-tight text-white">
             {categoryName}
           </h1>
 
-          {!isLoading && !isError && meals && (
-            <p className="mt-3 text-[12px] font-light uppercase tracking-[0.2em] text-stone-muted">
-              {meals.length} recipe{meals.length !== 1 ? "s" : ""} in this
-              category
-            </p>
-          )}
+          {/* Tagline */}
+          <p className="mb-8 font-playfair text-lg italic text-stone-400">
+            {meta.tagline}
+          </p>
+
+          {/* Count pill — only when loaded */}
+          {!isLoading && !isError && meals && <StatPill count={meals.length} />}
         </div>
       </div>
 
-      {/* ── Content ── */}
+      {/* ── Thin amber rule ─────────────────────────────────────────────── */}
+      <div className="h-px bg-gradient-to-r from-transparent via-amber-brand/30 to-transparent" />
+
+      {/* ── Content ─────────────────────────────────────────────────────── */}
       <div className="mx-auto max-w-6xl px-6 py-12">
-        {/* Loading skeletons */}
+        {/* Loading */}
         {isLoading && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
             {Array.from({ length: 9 }).map((_, i) => (
-              <SkeletonCard key={i} />
+              <div key={i} className="mb-5 break-inside-avoid">
+                <SkeletonCard tall={i % 4 === 0} />
+              </div>
             ))}
           </div>
         )}
 
-        {/* Error state */}
+        {/* Error */}
         {isError && (
           <div className="py-24 text-center">
             <div className="mb-4 text-5xl">⚠️</div>
@@ -110,44 +206,40 @@ export const CategoryBrowsePage = () => {
           </div>
         )}
 
-        {/* Empty state */}
+        {/* Empty */}
         {!isLoading && !isError && (!meals || meals.length === 0) && (
           <div className="py-24 text-center">
             <div className="mb-4 text-5xl">🍽️</div>
-            <p className="font-playfair text-xl italic text-stone-faint">
+            <p className="font-playfair text-xl italic text-stone-500">
               No recipes found in{" "}
               <em className="text-amber-brand">"{categoryName}"</em>
             </p>
-            <p className="mt-2 text-[12px] font-light uppercase tracking-[0.2em] text-stone-muted">
+            <p className="mt-2 text-[11px] font-light uppercase tracking-[0.2em] text-stone-600">
               Try browsing a different category
             </p>
           </div>
         )}
 
-        {/* Results grid */}
+        {/* Grid */}
         {meals && meals.length > 0 && (
-          <>
-            {/* Divider */}
-            <div className="mb-8 flex items-center gap-4">
-              <hr className="h-px flex-1 border-none bg-amber-brand/10" />
-              <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-stone-faint">
-                {meals.length} recipe{meals.length !== 1 ? "s" : ""} found
-              </span>
-              <hr className="h-px flex-1 border-none bg-amber-brand/10" />
-            </div>
-
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {meals.map((meal) => (
-                <Link
-                  key={meal.idMeal}
-                  to="/meal/$id"
-                  params={{ id: meal.idMeal }}
-                >
-                  <ResultCard meal={meal} />
+          <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
+            {meals.map((meal, i) => (
+              <div key={meal.idMeal} className="mb-5 break-inside-avoid">
+                <Link to="/meal/$id" params={{ id: meal.idMeal }}>
+                  {/* Taller card every 5th item for visual rhythm */}
+                  <div
+                    className={
+                      i % 5 === 0
+                        ? "[&_img]:aspect-[4/5]"
+                        : "[&_img]:aspect-square"
+                    }
+                  >
+                    <ResultCard meal={meal} />
+                  </div>
                 </Link>
-              ))}
-            </div>
-          </>
+              </div>
+            ))}
+          </div>
         )}
       </div>
     </div>
