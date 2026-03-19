@@ -3,6 +3,9 @@ import { useGetMeals } from "../../apis/recipe-api";
 import { ResultCard } from "./result-card";
 import { SearchBar } from "../../components/navbar/search-bar";
 
+const heroBg =
+  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1400&q=80";
+
 const SkeletonCard = () => (
   <div className="overflow-hidden rounded bg-surface-card ring-1 ring-amber-brand/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
     <div className="aspect-square [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
@@ -23,7 +26,19 @@ export const ResultPage = () => {
     <div className="min-h-screen bg-[#181A1B] font-barlow">
       {/* Hero search band */}
       <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
-        <div className="pointer-events-none absolute inset-0 overflow-hidden [background-image:radial-gradient(circle_at_10%_20%,rgba(210,160,80,0.07)_0%,transparent_50%),radial-gradient(circle_at_90%_80%,rgba(180,100,60,0.07)_0%,transparent_50%)]" />
+        {/* Background wrapper has overflow-hidden so it clips the image,
+            but stays separate from the hero container so the search dropdown
+            can overflow freely without being clipped. */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <img
+            src={heroBg}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-stone-cream/70" />
+        </div>
+
         <div className="relative">
           <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
             Search Results
