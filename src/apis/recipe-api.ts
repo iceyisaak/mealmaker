@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { API_PREFIX, BASEURL } from "./api-constant";
 import axios from "axios";
-import { type Meal, type Category, type MealSearchParams } from "../types/meal";
+import { type Meal, type Category } from "../types/meal";
 
 export const useGetRecommendedMenu = () => {
   const APIURL = `${BASEURL}${API_PREFIX}random.php`;
@@ -79,5 +79,19 @@ export const useGetMealsByCategory = (category: string) => {
         : [];
     },
     staleTime: 5000,
+  });
+};
+
+export const useGetMealsByOrigin = (origin: string) => {
+  const url = `${BASEURL}${API_PREFIX}filter.php?a=${origin}`;
+
+  return useQuery<Meal[], Error>({
+    queryKey: ["meals", "origin", origin],
+    queryFn: async () => {
+      const response = await axios.get(url);
+      const meals = response.data.meals as Meal[];
+      return meals ? meals.map((meal) => ({ ...meal, strArea: origin })) : [];
+    },
+    staleTime: 5 * 60 * 1000,
   });
 };
