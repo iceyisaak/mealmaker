@@ -25,7 +25,7 @@ export const ResultCard = ({ meal }: { meal: Meal }) => {
           {meal.strMeal}
         </h3>
         <p className="mt-auto text-[11px] font-medium uppercase tracking-[0.18em] text-stone-faint">
-          {meal.strArea ? `${meal.strArea} Cuisine` : "—"}
+          {meal.strArea && `${meal.strArea} Cuisine`}
         </p>
       </div>
     </article>
