@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useGetMealsByOrigin } from "../../apis/recipe-api";
+import { Link } from "@tanstack/react-router";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Meal {
@@ -43,7 +44,10 @@ const ORIGINS = [
 
 // ─── Meal Card ────────────────────────────────────────────────────────────────
 const MealCard = ({ meal, index }: { meal: Meal; index: number }) => (
-  <article
+  <Link
+    key={meal.idMeal}
+    to="/meal/$id"
+    params={{ id: meal.idMeal }}
     className="group bg-white rounded-xl overflow-hidden shadow-md cursor-pointer
                transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl
                animate-[fadeUp_0.4s_ease_both]"
@@ -70,7 +74,7 @@ const MealCard = ({ meal, index }: { meal: Meal; index: number }) => (
         {meal.strMeal}
       </h3>
     </div>
-  </article>
+  </Link>
 );
 
 // ─── Skeleton Card ────────────────────────────────────────────────────────────
