@@ -4,7 +4,7 @@ import "./styles/index.css";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen"; // This file is auto-generated!
 
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree, scrollRestoration: true });
 
 // Register the router for maximum type safety
 declare module "@tanstack/react-router" {
