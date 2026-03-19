@@ -4,20 +4,25 @@ import coverVdo from "../../assets/cover-vdo.mp4";
 
 const SearchSection = () => {
   return (
-    <aside className="relative flex h-[60rem] w-full flex-col items-center justify-center overflow-hidden font-barlow">
-      {/* Background Video */}
-      <video
-        className="absolute inset-0 z-0 h-full w-full object-cover"
-        src={coverVdo}
-        autoPlay
-        loop
-        muted
-        playsInline
-      />
+    <aside className="relative flex h-[60rem] w-full flex-col items-center justify-center font-barlow">
+      {/* Background video clipped independently — does not affect dropdown stacking */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <video
+          className="absolute inset-0 z-0 h-full w-full object-cover"
+          src={coverVdo}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
 
-      {/* Layered overlay: dark base + amber glow at bottom bleeding into header */}
-      <div className="absolute inset-0 z-10 bg-black/55" />
-      <div className="absolute inset-0 z-10 [background:radial-gradient(ellipse_at_50%_100%,rgba(196,124,58,0.18)_0%,transparent_65%)]" />
+        {/* Layered overlay: dark base + amber glow at bottom bleeding into header */}
+        <div className="absolute inset-0 z-10 bg-black/55" />
+        <div className="absolute inset-0 z-10 [background:radial-gradient(ellipse_at_50%_100%,rgba(196,124,58,0.18)_0%,transparent_65%)]" />
+
+        {/* Bottom fade into header bg */}
+        <div className="absolute bottom-0 left-0 right-0 z-20 h-32 [background:linear-gradient(to_bottom,transparent,#181A1B)]" />
+      </div>
 
       {/* Content */}
       <div className="relative z-20 flex flex-col items-center px-6 text-center">
@@ -48,9 +53,6 @@ const SearchSection = () => {
           ChefBot
         </button>
       </div>
-
-      {/* Bottom fade into header bg */}
-      <div className="absolute bottom-0 left-0 right-0 z-20 h-32 [background:linear-gradient(to_bottom,transparent,#181A1B)]" />
     </aside>
   );
 };
