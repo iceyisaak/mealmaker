@@ -1,1 +1,1 @@
-export { CategoryBrowsePage } from "./category-sub-page.tsx";
+export { CategoryBrowsePage } from "./category-browse-page.tsx";
