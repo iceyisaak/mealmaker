@@ -1,9 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from "@tanstack/react-router";
+import { BookmarkPage } from "../pages/bookmark-page";
 
-export const Route = createFileRoute('/bookmark/')({
+export const Route = createFileRoute("/bookmark/")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <div>Hello "/bookmark/"!</div>
+  return <BookmarkPage />;
 }
