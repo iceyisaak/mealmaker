@@ -1,4 +1,4 @@
-import { Link, useSearch } from "@tanstack/react-router";
+import { useSearch } from "@tanstack/react-router";
 import { useGetMeals } from "../../apis/recipe-api";
 import { ResultCard } from "./result-card";
 import { SearchBar } from "../../components/navbar/search-bar";
@@ -92,13 +92,7 @@ export const ResultPage = () => {
             </div>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {meals.map((meal) => (
-                <Link
-                  key={meal.idMeal}
-                  to="/meal/$id"
-                  params={{ id: meal.idMeal }}
-                >
-                  <ResultCard meal={meal} />
-                </Link>
+                <ResultCard meal={meal} />
               ))}
             </div>
           </>
