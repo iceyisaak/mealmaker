@@ -7,7 +7,6 @@ import {
   Bookmark,
   UtensilsCrossed,
   Globe,
-  Leaf,
 } from "lucide-react";
 
 export const Navbar = () => {
@@ -99,7 +98,7 @@ export const Navbar = () => {
 
           {/* My Bookmarked Recipes */}
           <Link
-            to="/"
+            to="/bookmark"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-stone-300 hover:text-stone-cream hover:bg-white/5 transition-all duration-150"
           >
             <Bookmark className="w-4 h-4 text-amber-brand/70" />
