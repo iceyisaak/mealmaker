@@ -293,17 +293,15 @@ export const CategoryBrowsePage = () => {
           <div className="columns-1 gap-5 sm:columns-2 lg:columns-3">
             {meals.map((meal, i) => (
               <div key={meal.idMeal} className="mb-5 break-inside-avoid">
-                <Link to="/meal/$id" params={{ id: meal.idMeal }}>
-                  <div
-                    className={
-                      i % 5 === 0
-                        ? "[&_img]:aspect-[4/5]"
-                        : "[&_img]:aspect-square"
-                    }
-                  >
-                    <ResultCard meal={meal} />
-                  </div>
-                </Link>
+                <div
+                  className={
+                    i % 5 === 0
+                      ? "[&_img]:aspect-[4/5]"
+                      : "[&_img]:aspect-square"
+                  }
+                >
+                  <ResultCard meal={meal} />
+                </div>
               </div>
             ))}
           </div>
