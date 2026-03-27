@@ -2,11 +2,21 @@ import { useRouter } from "@tanstack/react-router";
 import { useGetMealById } from "../../apis/recipe-api";
 import { Route } from "../../routes/meal.$id";
 import { IoArrowBackSharp } from "react-icons/io5";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
+import { useBookmarkRecipe } from "../../features/store/useBookmarkRecipe";
 
 export const DetailPage = () => {
   const { id } = Route.useParams();
   const { data: meal, isLoading, isError, error } = useGetMealById(id);
   const router = useRouter();
+
+  const saveRecipe = useBookmarkRecipe((s) => s.saveRecipe);
+  const removeRecipe = useBookmarkRecipe((s) => s.removeRecipe);
+  const isBookmarked = useBookmarkRecipe((s) => s.isBookmarked(id));
+
+  const handleBookmark = () => {
+    isBookmarked ? removeRecipe(id) : saveRecipe(id);
+  };
 
   if (isLoading) {
     return (
@@ -52,14 +62,31 @@ export const DetailPage = () => {
       <div className="pointer-events-none absolute inset-0 [background-image:radial-gradient(circle_at_70%_10%,rgba(196,124,58,0.07)_0%,transparent_55%),radial-gradient(circle_at_20%_80%,rgba(196,124,58,0.05)_0%,transparent_50%)]" />
 
       <div className="relative mx-auto max-w-5xl px-6 py-28">
-        {/* Back link */}
-        <button
-          onClick={() => router.history.back()}
-          className="group cursor-pointer mb-10 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-stone-faint transition-colors hover:text-amber-brand"
-        >
-          <IoArrowBackSharp className="transition-transform duration-200 group-hover:-translate-x-0.5" />
-          Back
-        </button>
+        {/* Back link + Bookmark */}
+        <div className="mb-10 flex items-center justify-between">
+          <button
+            onClick={() => router.history.back()}
+            className="group cursor-pointer flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.2em] text-stone-faint transition-colors hover:text-amber-brand"
+          >
+            <IoArrowBackSharp className="transition-transform duration-200 group-hover:-translate-x-0.5" />
+            Back
+          </button>
+
+          <button
+            onClick={handleBookmark}
+            aria-label={
+              isBookmarked ? "Remove bookmark" : "Bookmark this recipe"
+            }
+            className="group flex cursor-pointer items-center gap-2 rounded-full border border-amber-brand/20 bg-amber-brand/5 px-4 py-2 text-[11px] font-medium uppercase tracking-[0.2em] text-stone-faint transition-all duration-200 hover:border-amber-brand/50 hover:bg-amber-brand/10 hover:text-amber-brand"
+          >
+            {isBookmarked ? (
+              <BsBookmarkFill className="text-amber-brand transition-transform duration-200 group-hover:scale-110" />
+            ) : (
+              <BsBookmark className="transition-transform duration-200 group-hover:scale-110" />
+            )}
+            {isBookmarked ? "Saved" : "Save Recipe"}
+          </button>
+        </div>
 
         {/* Title block */}
         <div className="mb-10">
