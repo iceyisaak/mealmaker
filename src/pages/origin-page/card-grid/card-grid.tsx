@@ -10,8 +10,6 @@ export const CardGrid = ({ origin }: { origin: string }) => {
     isError,
   } = useGetMealsByOrigin(origin);
 
-  console.log("[MealGrid]", { origin, isLoading, isFetching, isError, meals });
-
   if (isLoading || isFetching)
     return (
       <div className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-5">
