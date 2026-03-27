@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MealGrid } from "./card-grid/card-grid";
+import { CardGrid } from "./card-grid/card-grid";
 import { ORIGINS } from "../../apis/origin.constants";
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -95,7 +95,7 @@ export const OriginPage = () => {
           />
         </header>
 
-        <MealGrid origin={selected} />
+        <CardGrid origin={selected} />
       </section>
     </div>
   );

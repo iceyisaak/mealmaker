@@ -2,7 +2,7 @@ import { OriginCard } from "../origin-card";
 import { SkeletonCard } from "../skeleton-card";
 import { useGetMealsByOrigin } from "../../../apis/recipe-api";
 
-export const MealGrid = ({ origin }: { origin: string }) => {
+export const CardGrid = ({ origin }: { origin: string }) => {
   const {
     data: meals,
     isLoading,
