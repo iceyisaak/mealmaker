@@ -9,22 +9,6 @@ export const OriginPage = () => {
 
   return (
     <div className="min-h-screen bg-[#f7f3ed] text-stone-900">
-      {/* Keyframes + font — only what Tailwind can't handle */}
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
-        .font-serif { font-family: 'Playfair Display', serif !important; }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(16px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes shimmer {
-          0%   { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
-        }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { scrollbar-width: none; }
-      `}</style>
-
       {/* ── Hero ─────────────────────────────────────────────────────────────── */}
       <header className="relative bg-[#1a1209] overflow-hidden px-10 pt-16 pb-14 md:px-12 md:pt-20 md:pb-16">
         {/* Noise overlay */}
