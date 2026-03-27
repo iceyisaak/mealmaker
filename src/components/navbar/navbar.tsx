@@ -37,12 +37,6 @@ export const Navbar = () => {
       icon: Globe,
       label: "By Culinary Origin",
     },
-    {
-      to: "/ingredient",
-      search: { mode: "ingredients" },
-      icon: Leaf,
-      label: "By Ingredients",
-    },
   ];
 
   return (
