@@ -20,15 +20,6 @@ export const DiscoverRecipes = () => {
         "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80",
       to: "/origin",
     },
-    // {
-    //   label: "By Ingredients",
-    //   icon: "🌿",
-    //   description:
-    //     "Start with what's in your kitchen and find recipes that match.",
-    //   image:
-    //     "https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&q=80",
-    //   to: "/ingredient",
-    // },
   ];
 
   return (
