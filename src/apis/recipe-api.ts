@@ -25,21 +25,21 @@ export const useGetMealCategories = () => {
   });
 };
 
-export const useGetMealById = (id: string) => {
-  const APIURL = `${BASEURL}${API_PREFIX}lookup.php?i=${id}`;
+// ✅ Extracted config factory
+export const getMealByIdQuery = (id: string) => ({
+  queryKey: ["meal", id],
+  queryFn: async () => {
+    const response = await axios.get(
+      `${BASEURL}${API_PREFIX}lookup.php?i=${id}`,
+    );
+    return response.data.meals[0] as Meal;
+  },
+  enabled: !!id,
+  staleTime: 5000,
+});
 
-  return useQuery({
-    queryKey: ["meal", id],
-
-    queryFn: async () => {
-      const response = await axios.get(APIURL);
-      return response.data.meals[0] as Meal;
-    },
-
-    enabled: !!id,
-    staleTime: 5000,
-  });
-};
+// ✅ Thin wrapper — single-item usage unchanged
+export const useGetMealById = (id: string) => useQuery(getMealByIdQuery(id));
 
 export const useGetMealOrigin = () => {
   const APIURL = `${BASEURL}${API_PREFIX}list.php?a=list`;
@@ -54,7 +54,6 @@ export const useGetMealOrigin = () => {
 
 export const useGetMeals = (q: string) => {
   const APIURL = `${BASEURL}${API_PREFIX}search.php?s=${q}`;
-
   return useQuery<Meal[], Error>({
     queryKey: ["meals", "search", q],
     queryFn: async () => {
@@ -68,7 +67,6 @@ export const useGetMeals = (q: string) => {
 
 export const useGetMealsByCategory = (category: string) => {
   const APIURL = `${BASEURL}${API_PREFIX}filter.php?c=${category}`;
-
   return useQuery<Meal[], Error>({
     queryKey: ["meals", "category", category],
     queryFn: async () => {
@@ -84,7 +82,6 @@ export const useGetMealsByCategory = (category: string) => {
 
 export const useGetMealsByOrigin = (origin: string) => {
   const url = `${BASEURL}${API_PREFIX}filter.php?a=${origin}`;
-
   return useQuery<Meal[], Error>({
     queryKey: ["meals", "origin", origin],
     queryFn: async () => {

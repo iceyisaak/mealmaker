@@ -2,28 +2,18 @@ import { useQueries } from "@tanstack/react-query";
 import { useBookmarkRecipe } from "../../features/store/useBookmarkRecipe";
 import { RecipeCard } from "../recipe-card";
 import type { Meal } from "../../types";
+import { getMealByIdQuery } from "../../apis/recipe-api";
 
 export const BookmarkPage = () => {
   const { bookmarks, removeRecipe } = useBookmarkRecipe();
 
-  const mealQueries = useQueries({
-    queries: bookmarks.map((id) => ({
-      queryKey: ["meal", id],
-      queryFn: async () => {
-        const response = await fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`,
-        );
-        const data = await response.json();
-        return data.meals?.[0] as Meal;
-      },
-      enabled: !!id,
-      staleTime: 5000,
-    })),
+  const getMeal = useQueries({
+    queries: bookmarks.map((id) => getMealByIdQuery(id)),
   });
 
-  const isLoading = mealQueries.some((query) => query.isLoading);
-  const isError = mealQueries.some((query) => query.isError);
-  const meals = mealQueries
+  const isLoading = getMeal.some((query) => query.isLoading);
+  const isError = getMeal.some((query) => query.isError);
+  const meals = getMeal
     .map((query) => query.data)
     .filter((meal): meal is Meal => meal !== undefined);
 
