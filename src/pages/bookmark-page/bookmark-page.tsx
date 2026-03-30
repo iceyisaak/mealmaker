@@ -4,6 +4,19 @@ import { RecipeCard } from "../recipe-card";
 import type { Meal } from "../../types";
 import { getMealByIdQuery } from "../../apis/recipe-api";
 
+const heroBg =
+  "https://images.unsplash.com/photo-1466637574441-749b8f19452f?auto=format&fit=crop&w=1400&q=80";
+
+const SkeletonCard = () => (
+  <div className="overflow-hidden rounded bg-surface-card ring-1 ring-amber-brand/10 shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
+    <div className="aspect-square [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
+    <div className="px-5 pb-5 pt-4">
+      <div className="mb-2 h-5 w-4/5 rounded-sm [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
+      <div className="h-4 w-2/5 rounded-sm [background:linear-gradient(90deg,#1f2223_25%,#252829_50%,#1f2223_75%)] [background-size:200%_100%] animate-shimmer" />
+    </div>
+  </div>
+);
+
 export const BookmarkPage = () => {
   const { bookmarks, removeRecipe } = useBookmarkRecipe();
 
@@ -19,12 +32,35 @@ export const BookmarkPage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-surface-dark flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="w-10 h-10 border-2 border-amber-brand border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="font-barlow text-stone-faint tracking-widest text-xs uppercase">
-            Loading your collection
-          </p>
+      <div className="min-h-screen bg-surface-dark font-barlow">
+        {/* Hero search band */}
+        <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <img
+              src={heroBg}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-stone-cream/70" />
+          </div>
+          <div className="relative">
+            <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
+              Your Collection
+            </span>
+            <h1 className="mb-8 font-playfair text-[clamp(28px,4vw,52px)] font-black leading-tight tracking-tight text-ink">
+              Saved Recipes
+            </h1>
+          </div>
+        </div>
+
+        {/* Content area */}
+        <div className="mx-auto max-w-6xl px-6 py-12">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -32,20 +68,41 @@ export const BookmarkPage = () => {
 
   if (isError && meals.length === 0) {
     return (
-      <div className="min-h-screen bg-surface-dark flex items-center justify-center px-4">
-        <div className="text-center max-w-sm">
-          <p className="font-playfair text-3xl text-white mb-3">
-            Something went wrong
+      <div className="min-h-screen bg-surface-dark font-barlow">
+        {/* Hero search band */}
+        <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <img
+              src={heroBg}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-stone-cream/70" />
+          </div>
+          <div className="relative">
+            <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
+              Your Collection
+            </span>
+            <h1 className="mb-8 font-playfair text-[clamp(28px,4vw,52px)] font-black leading-tight tracking-tight text-ink">
+              Saved Recipes
+            </h1>
+          </div>
+        </div>
+
+        {/* Content area */}
+        <div className="mx-auto max-w-6xl px-6 py-12">
+          <p className="py-20 text-center font-playfair text-xl italic text-red-400">
+            Something went wrong. Please try again.
           </p>
-          <p className="font-barlow font-light text-stone-muted mb-8">
-            We couldn't load your saved recipes.
-          </p>
-          <button
-            onClick={() => window.location.reload()}
-            className="font-barlow text-xs tracking-widest uppercase px-8 py-3 border border-amber-brand text-amber-brand hover:bg-amber-brand hover:text-white transition-colors duration-300"
-          >
-            Try Again
-          </button>
+          <div className="text-center">
+            <button
+              onClick={() => window.location.reload()}
+              className="font-barlow text-xs tracking-widest uppercase px-8 py-3 border border-amber-brand text-amber-brand hover:bg-amber-brand hover:text-white transition-colors duration-300"
+            >
+              Try Again
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -53,63 +110,98 @@ export const BookmarkPage = () => {
 
   if (bookmarks.length === 0) {
     return (
-      <div className="min-h-screen bg-surface-dark flex items-center justify-center px-4">
-        <div className="text-center max-w-sm animate-fade-up">
-          <p className="font-playfair italic text-5xl text-stone-faint mb-6">
-            Empty
-          </p>
-          <p className="font-playfair text-2xl text-white mb-3">
-            No saved recipes yet
-          </p>
-          <p className="font-barlow font-light text-stone-muted mb-10">
-            Start exploring and bookmark the recipes you love.
-          </p>
+      <div className="min-h-screen bg-surface-dark font-barlow">
+        {/* Hero search band */}
+        <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <img
+              src={heroBg}
+              alt=""
+              aria-hidden="true"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-stone-cream/70" />
+          </div>
+          <div className="relative">
+            <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
+              Your Collection
+            </span>
+            <h1 className="mb-8 font-playfair text-[clamp(28px,4vw,52px)] font-black leading-tight tracking-tight text-ink">
+              Saved Recipes
+            </h1>
+          </div>
+        </div>
 
-          <a
-            href="/"
-            className="font-barlow text-xs tracking-widest uppercase px-8 py-3 bg-amber-brand text-white hover:bg-amber-light transition-colors duration-300"
-          >
-            Explore Recipes
-          </a>
+        {/* Content area */}
+        <div className="mx-auto max-w-6xl px-6 py-12">
+          <div className="py-24 text-center">
+            <div className="mb-4 text-5xl">📚</div>
+            <p className="font-playfair text-xl italic text-stone-faint">
+              No saved recipes yet
+            </p>
+            <p className="mt-2 text-[12px] font-light uppercase tracking-[0.2em] text-stone-muted">
+              Start exploring and bookmark the recipes you love
+            </p>
+            <div className="mt-8">
+              <a
+                href="/"
+                className="inline-block font-barlow text-xs tracking-widest uppercase px-8 py-3 bg-amber-brand text-white hover:bg-amber-light transition-colors duration-300"
+              >
+                Explore Recipes
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-surface-dark">
-      {/* Header */}
-      <div className="border-b border-stone-warm/10 px-6 py-10 md:px-12">
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="font-barlow text-xs tracking-widest uppercase text-stone-faint mb-2">
-              Your Collection
-            </p>
-            <h1 className="font-playfair text-4xl md:text-5xl text-white">
-              Saved Recipes
-            </h1>
-            <p className="font-barlow font-light text-stone-muted mt-2">
-              {meals.length} recipe{meals.length !== 1 ? "s" : ""} saved
-            </p>
-          </div>
+    <div className="min-h-screen bg-surface-dark font-barlow">
+      {/* Hero search band */}
+      <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-16 text-center">
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <img
+            src={heroBg}
+            alt=""
+            aria-hidden="true"
+            className="h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-stone-cream/70" />
+        </div>
 
-          {/* Clear all button */}
-          <button
-            onClick={() => {
-              if (window.confirm("Remove all bookmarks?")) {
-                meals.forEach((meal) => removeRecipe(meal.idMeal));
-              }
-            }}
-            className="font-barlow text-xs tracking-widest uppercase text-stone-faint hover:text-amber-brand transition-colors duration-200"
-          >
-            Clear all bookmarks
-          </button>
+        <div className="relative">
+          <span className="mb-3 block text-[11px] font-medium uppercase tracking-[0.3em] text-amber-brand">
+            Your Collection
+          </span>
+          <h1 className="mb-4 font-playfair text-[clamp(28px,4vw,52px)] font-black leading-tight tracking-tight text-ink">
+            Saved Recipes
+          </h1>
+          <div className="flex items-center justify-center gap-4">
+            <hr className="h-px w-12 flex-1 border-none bg-amber-brand/20" />
+            <span className="text-[11px] font-medium uppercase tracking-[0.25em] text-stone-muted">
+              {meals.length} recipe{meals.length !== 1 ? "s" : ""} saved
+            </span>
+            <hr className="h-px w-12 flex-1 border-none bg-amber-brand/20" />
+          </div>
+          <div className="mt-6">
+            <button
+              onClick={() => {
+                if (window.confirm("Remove all bookmarks?")) {
+                  meals.forEach((meal) => removeRecipe(meal.idMeal));
+                }
+              }}
+              className="font-barlow text-[11px] tracking-[0.2em] uppercase px-6 py-2.5 border border-stone-muted/30 rounded-sm text-stone-muted hover:border-amber-brand hover:text-amber-brand transition-all duration-200"
+            >
+              Clear all bookmarks
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Grid */}
-      <div className="px-6 py-10 md:px-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {/* Content area */}
+      <div className="mx-auto max-w-6xl px-6 py-12">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {meals.map((meal, i) => (
             <div
               key={meal.idMeal}
