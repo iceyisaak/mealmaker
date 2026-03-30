@@ -11,23 +11,19 @@ export const BookmarkPage = () => {
     queries: bookmarks.map((id) => getMealByIdQuery(id)),
   });
 
-  const isLoading = getMeal.some((query) => query.isLoading);
-  const isError = getMeal.some((query) => query.isError);
+  const isLoading = getMeal.some((q) => q.isLoading);
+  const isError = getMeal.some((q) => q.isError);
   const meals = getMeal
-    .map((query) => query.data)
+    .map((q) => q.data)
     .filter((meal): meal is Meal => meal !== undefined);
-
-  const handleRemoveBookmark = (recipeId: string) => {
-    removeRecipe(recipeId);
-  };
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          <p className="mt-4 text-gray-600">
-            Loading your bookmarked recipes...
+      <div className="min-h-screen bg-surface-dark flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="w-10 h-10 border-2 border-amber-brand border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="font-barlow text-stone-faint tracking-widest text-xs uppercase">
+            Loading your collection
           </p>
         </div>
       </div>
@@ -36,18 +32,17 @@ export const BookmarkPage = () => {
 
   if (isError && meals.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center max-w-md mx-auto px-4">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+      <div className="min-h-screen bg-surface-dark flex items-center justify-center px-4">
+        <div className="text-center max-w-sm">
+          <p className="font-playfair text-3xl text-white mb-3">
             Something went wrong
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Failed to load your bookmarked recipes. Please try again.
+          </p>
+          <p className="font-barlow font-light text-stone-muted mb-8">
+            We couldn't load your saved recipes.
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            className="font-barlow text-xs tracking-widest uppercase px-8 py-3 border border-amber-brand text-amber-brand hover:bg-amber-brand hover:text-white transition-colors duration-300"
           >
             Try Again
           </button>
@@ -58,18 +53,21 @@ export const BookmarkPage = () => {
 
   if (bookmarks.length === 0) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center max-w-md mx-auto px-4">
-          <div className="text-6xl mb-4">📚</div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
-            No Bookmarks Yet
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Start saving your favorite recipes to see them here!
+      <div className="min-h-screen bg-surface-dark flex items-center justify-center px-4">
+        <div className="text-center max-w-sm animate-fade-up">
+          <p className="font-playfair italic text-5xl text-stone-faint mb-6">
+            Empty
           </p>
+          <p className="font-playfair text-2xl text-white mb-3">
+            No saved recipes yet
+          </p>
+          <p className="font-barlow font-light text-stone-muted mb-10">
+            Start exploring and bookmark the recipes you love.
+          </p>
+
           <a
             href="/"
-            className="inline-block px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors"
+            className="font-barlow text-xs tracking-widest uppercase px-8 py-3 bg-amber-brand text-white hover:bg-amber-light transition-colors duration-300"
           >
             Explore Recipes
           </a>
@@ -79,64 +77,76 @@ export const BookmarkPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">
-          My Bookmarked Recipes
-        </h1>
-        <p className="text-gray-600">
-          You have {meals.length} saved recipe{meals.length !== 1 ? "s" : ""}
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {meals.map((meal) => (
-          <div key={meal.idMeal} className="relative group">
-            <RecipeCard recipe={meal} />
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                handleRemoveBookmark(meal.idMeal);
-              }}
-              className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md 
-                       opacity-0 group-hover:opacity-100 transition-opacity
-                       hover:bg-red-50 focus:outline-none z-10"
-              aria-label="Remove bookmark"
-            >
-              <svg
-                className="w-5 h-5 text-red-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+    <div className="min-h-screen bg-surface-dark">
+      {/* Header */}
+      <div className="border-b border-stone-warm/10 px-6 py-10 md:px-12">
+        <div className="flex justify-between items-start">
+          <div>
+            <p className="font-barlow text-xs tracking-widest uppercase text-stone-faint mb-2">
+              Your Collection
+            </p>
+            <h1 className="font-playfair text-4xl md:text-5xl text-white">
+              Saved Recipes
+            </h1>
+            <p className="font-barlow font-light text-stone-muted mt-2">
+              {meals.length} recipe{meals.length !== 1 ? "s" : ""} saved
+            </p>
           </div>
-        ))}
-      </div>
 
-      {meals.length > 0 && (
-        <div className="mt-8 text-center">
+          {/* Clear all button */}
           <button
             onClick={() => {
-              if (
-                window.confirm("Are you sure you want to remove all bookmarks?")
-              ) {
+              if (window.confirm("Remove all bookmarks?")) {
                 meals.forEach((meal) => removeRecipe(meal.idMeal));
               }
             }}
-            className="px-4 py-2 text-sm text-red-600 hover:text-red-700 
-                     border border-red-300 rounded-lg hover:bg-red-50 
-                     transition-colors"
+            className="font-barlow text-xs tracking-widest uppercase text-stone-faint hover:text-amber-brand transition-colors duration-200"
           >
-            Clear All Bookmarks
+            Clear all bookmarks
           </button>
         </div>
-      )}
+      </div>
+
+      {/* Grid */}
+      <div className="px-6 py-10 md:px-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {meals.map((meal, i) => (
+            <div
+              key={meal.idMeal}
+              className="relative group animate-fade-up"
+              style={{
+                animationDelay: `${i * 60}ms`,
+                animationFillMode: "both",
+              }}
+            >
+              <RecipeCard recipe={meal} />
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  removeRecipe(meal.idMeal);
+                }}
+                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center
+                           bg-surface-card/90 backdrop-blur-sm rounded-full
+                           opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                           hover:bg-amber-brand hover:text-white text-stone-faint"
+                aria-label="Remove bookmark"
+              >
+                <svg
+                  className="w-3.5 h-3.5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };

@@ -13,20 +13,20 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
         id: recipe.idMeal,
       }}
     >
-      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
-        <div className="relative h-48 flex-shrink-0">
+      <div className="bg-surface-card rounded-lg overflow-hidden hover:bg-surface-hover transition-all duration-300 cursor-pointer h-full flex flex-col border border-stone-warm/10">
+        <div className="relative h-48 flex-shrink-0 overflow-hidden">
           <img
             src={recipe.strMealThumb}
             alt={recipe.strMeal}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
 
         <div className="p-4 flex flex-col flex-grow">
-          <h3 className="text-lg font-semibold text-gray-800 mb-1 line-clamp-1">
+          <h3 className="font-playfair text-lg font-semibold text-white mb-1 line-clamp-1">
             {recipe.strMeal}
           </h3>
-          <p className="text-sm text-gray-600 mb-2">
+          <p className="font-barlow text-sm text-stone-muted">
             {recipe.strArea} • {recipe.strCategory}
           </p>
         </div>
