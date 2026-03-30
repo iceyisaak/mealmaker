@@ -89,7 +89,7 @@ export const Navbar = () => {
 
           {/* Ask Chefbot */}
           <Link
-            to="/"
+            to="/chefbot"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium text-stone-300 hover:text-stone-cream hover:bg-white/5 transition-all duration-150"
           >
             <Bot className="w-4 h-4 text-amber-brand/70" />
