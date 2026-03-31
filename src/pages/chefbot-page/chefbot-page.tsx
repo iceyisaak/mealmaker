@@ -195,16 +195,24 @@ export const ChefbotPage = () => {
       <div className="mx-auto max-w-4xl px-6 py-8">
         <div className="overflow-hidden rounded-lg border border-stone-warm/10 bg-surface-card shadow-2xl">
           <div className="border-b border-stone-warm/10 bg-surface-hover px-6 py-4 flex items-center gap-3">
-            <div className="h-10 w-10 items-center justify-center rounded-full bg-amber-brand/20 flex text-xl">
-              👨‍🍳
+            {/* Avatar Container with Relative Positioning */}
+            <div className="relative">
+              <div className="h-10 w-10 items-center justify-center rounded-full bg-amber-brand/20 flex text-xl">
+                👨‍🍳
+              </div>
+              {/* Green Online Dot */}
+              <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500 border-2 border-surface-hover ring-1 ring-green-500/20 animate-pulse"></span>
             </div>
+
             <div>
               <h2 className="font-playfair text-lg font-semibold text-white">
                 ChefBot
               </h2>
-              <p className="text-xs text-stone-muted">
-                Online • Powered by Local AI
-              </p>
+              <div className="flex items-center gap-1.5">
+                <p className="text-xs text-stone-muted">
+                  Online • Powered by Local AI
+                </p>
+              </div>
             </div>
           </div>
 
