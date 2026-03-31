@@ -1,13 +1,15 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type ReactNode } from "react";
 import {
   useGetMealCategories,
   useGetMeals,
   useGetMealOrigin,
 } from "../../apis/recipe-api";
+import { Link } from "@tanstack/react-router";
+import { CreateMLCEngine } from "@mlc-ai/web-llm";
 
 interface Message {
   id: string;
-  text: string;
+  text: string | ReactNode;
   sender: "user" | "chef";
   timestamp: Date;
 }
@@ -27,6 +29,7 @@ export const ChefbotPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [engine, setEngine] = useState<any>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -36,40 +39,94 @@ export const ChefbotPage = () => {
   const { data: origins } = useGetMealOrigin();
   const { data: meals, isFetching } = useGetMeals(searchQuery);
 
-  // Scroll to bottom whenever messages change
+  // Initialize AI Engine
+  useEffect(() => {
+    const initEngine = async () => {
+      const res = await CreateMLCEngine("Llama-3-8B-Instruct-q4f16_1-MLC");
+      setEngine(res);
+    };
+    initEngine();
+  }, []);
+
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, isTyping]);
 
-  // ✅ THE BRAIN: Watch for API results and respond only when data is ready
+  // Helper to add bot messages
+  const addBotMessage = (content: string | ReactNode) => {
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: Date.now().toString(),
+        text: content,
+        sender: "chef",
+        timestamp: new Date(),
+      },
+    ]);
+  };
+
+  const handleAIResponse = async (prompt: string) => {
+    if (!engine) {
+      addBotMessage(
+        "I'm still setting up my kitchen tools. Try again in a second!",
+      );
+      return;
+    }
+
+    setIsTyping(true);
+    try {
+      const reply = await engine.chat.completions.create({
+        messages: [
+          {
+            role: "system",
+            content:
+              "You are ChefBot. Keep responses brief and culinary-focused.",
+          },
+          { role: "user", content: prompt },
+        ],
+      });
+
+      const botText = reply.choices[0].message.content || "I'm stumped!";
+      addBotMessage(botText);
+    } catch (e) {
+      addBotMessage("My stove is acting up! Can you try that again?");
+    } finally {
+      setIsTyping(false);
+    }
+  };
+
+  // Watch for API results
   useEffect(() => {
     if (searchQuery && !isFetching && meals) {
-      let responseText = "";
-
       if (meals.length > 0) {
-        // If it's a single result, we could format the whole recipe,
-        // but for discovery, we list the top matches.
-        const list = meals
-          .slice(0, 5)
-          .map((m) => `• ${m.strMeal}`)
-          .join("\n");
-        responseText = `I found some great options for "${searchQuery}":\n\n${list}\n\nWhich one would you like the full recipe for?`;
+        const mealElements = (
+          <div className="flex flex-col gap-2">
+            <p>I found some great options for "{searchQuery}":</p>
+            <ul className="space-y-1">
+              {meals.slice(0, 5).map((m) => (
+                <li key={m.idMeal} className="flex items-start gap-2">
+                  <span>•</span>
+                  <Link
+                    to="/meal/$id"
+                    params={{ id: m.idMeal }}
+                    className="text-amber-brand underline hover:text-amber-light transition-colors font-medium"
+                  >
+                    {m.strMeal}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-1 text-[11px] opacity-70 italic">
+              Click a recipe to see the full details.
+            </p>
+          </div>
+        );
+        addBotMessage(mealElements);
       } else {
-        responseText = `I couldn't find any recipes for "${searchQuery}". Try a different ingredient or a broader category!`;
+        handleAIResponse(`I couldn't find recipes for ${searchQuery}.`);
       }
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: Date.now().toString(),
-          text: responseText,
-          sender: "chef",
-          timestamp: new Date(),
-        },
-      ]);
-
       setIsTyping(false);
-      setSearchQuery(""); // Clear the trigger
+      setSearchQuery("");
     }
   }, [meals, isFetching, searchQuery]);
 
@@ -91,27 +148,20 @@ export const ChefbotPage = () => {
     setIsTyping(true);
 
     const lower = userQuery.toLowerCase();
-
-    // 1. Check Categories API data for matches
     const matchedCat = categories?.find((c) =>
       lower.includes(c.strCategory.toLowerCase()),
     );
-    if (matchedCat) {
-      setSearchQuery(matchedCat.strCategory);
-      return;
-    }
-
-    // 2. Check Origins API data for matches
     const matchedOrigin = origins?.find((o) =>
       lower.includes(o.strArea.toLowerCase()),
     );
-    if (matchedOrigin) {
-      setSearchQuery(matchedOrigin.strArea);
-      return;
-    }
 
-    // 3. Fallback: General Ingredient/Name Search
-    setSearchQuery(userQuery);
+    if (matchedCat) {
+      setSearchQuery(matchedCat.strCategory);
+    } else if (matchedOrigin) {
+      setSearchQuery(matchedOrigin.strArea);
+    } else {
+      setSearchQuery(userQuery);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -123,7 +173,6 @@ export const ChefbotPage = () => {
 
   return (
     <div className="min-h-screen bg-surface-dark font-barlow text-stone-cream">
-      {/* Hero section */}
       <div className="relative border-b border-amber-brand/10 bg-stone-cream px-6 py-12 text-center">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <img
@@ -143,10 +192,8 @@ export const ChefbotPage = () => {
         </div>
       </div>
 
-      {/* Chat interface */}
       <div className="mx-auto max-w-4xl px-6 py-8">
         <div className="overflow-hidden rounded-lg border border-stone-warm/10 bg-surface-card shadow-2xl">
-          {/* Header */}
           <div className="border-b border-stone-warm/10 bg-surface-hover px-6 py-4 flex items-center gap-3">
             <div className="h-10 w-10 items-center justify-center rounded-full bg-amber-brand/20 flex text-xl">
               👨‍🍳
@@ -156,27 +203,30 @@ export const ChefbotPage = () => {
                 ChefBot
               </h2>
               <p className="text-xs text-stone-muted">
-                Online • Powered by TheMealDB
+                Online • Powered by Local AI
               </p>
             </div>
           </div>
 
-          {/* Messages Area */}
-          <div className="h-[500px] overflow-y-auto px-6 py-6 space-y-4">
+          <div className="h-[500px] overflow-y-auto px-6 py-6 space-y-4 bg-surface-dark/50">
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"} animate-fade-up`}
+                className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}
               >
                 <div
-                  className={`max-w-[80%] rounded-lg px-4 py-3 text-sm leading-relaxed ${
+                  className={`max-w-[80%] rounded-lg px-4 py-3 text-sm leading-relaxed animate-fade-up ${
                     message.sender === "user"
                       ? "bg-amber-brand text-white"
                       : "bg-surface-hover text-stone-cream border border-stone-warm/5"
                   }`}
                 >
-                  <p className="whitespace-pre-wrap">{message.text}</p>
-                  <p className="mt-1 text-[10px] opacity-50">
+                  {typeof message.text === "string" ? (
+                    <p className="whitespace-pre-wrap">{message.text}</p>
+                  ) : (
+                    message.text
+                  )}
+                  <p className="mt-1 text-[10px] opacity-50 text-right">
                     {message.timestamp.toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -195,7 +245,6 @@ export const ChefbotPage = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area */}
           <div className="border-t border-stone-warm/10 bg-surface-hover/50 px-6 py-4">
             <div className="flex gap-3">
               <input
@@ -211,7 +260,7 @@ export const ChefbotPage = () => {
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isTyping}
-                className="rounded-lg bg-amber-brand px-6 py-2.5 text-sm font-bold text-white hover:bg-amber-light disabled:opacity-50"
+                className="rounded-lg bg-amber-brand px-6 py-2.5 text-sm font-bold text-white hover:bg-amber-light disabled:opacity-50 transition-colors"
               >
                 Send
               </button>
