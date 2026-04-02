@@ -8,7 +8,7 @@ This app allows users to:
 
 1. Search for recipes
 2. Explore recipes through categories and origins
-3. Chat with Chefbot for inspirations
+3. Chat with Chefbot for recipe inspirations
 4. Bookmark favourite recipes
 
 ## Technologies
